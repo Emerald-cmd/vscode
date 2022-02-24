@@ -7,7 +7,7 @@
 // #######################################################################
 // ###                                                                 ###
 // ###      electron.d.ts types we need in a common layer for reuse    ###
-// ###                    (copied from Electron 16.x)                  ###
+// ###                    (copied from Electron 13.x)                  ###
 // ###                                                                 ###
 // #######################################################################
 
@@ -34,13 +34,6 @@ export interface MessageBoxOptions {
 	 */
 	defaultId?: number;
 	/**
-	 * Pass an instance of AbortSignal to optionally close the message box, the message
-	 * box will behave as if it was cancelled by the user. On macOS, `signal` does not
-	 * work with message boxes that do not have a parent window, since those message
-	 * boxes run synchronously due to platform limitations.
-	 */
-	signal?: AbortSignal;
-	/**
 	 * Title of the message box, some platforms will not show it.
 	 */
 	title?: string;
@@ -56,12 +49,7 @@ export interface MessageBoxOptions {
 	 * Initial checked state of the checkbox. `false` by default.
 	 */
 	checkboxChecked?: boolean;
-	/**
-	 * Custom width of the text in the message box.
-	 *
-	 * @platform darwin
-	 */
-	textWidth?: number;
+	//icon?: NativeImage;
 	/**
 	 * The index of the button to be used to cancel the dialog, via the `Esc` key. By
 	 * default this is assigned to the first button with "cancel" or "no" as the label.

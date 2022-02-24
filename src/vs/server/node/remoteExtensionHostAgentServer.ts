@@ -82,7 +82,7 @@ export class RemoteExtensionHostAgentServer extends Disposable {
 		this._logService.info(`Extension host agent started.`);
 	}
 
-	public async handleRequest(req: http.IncomingMessage, res: http.ServerResponse) {
+	public async handleRequest(req: http.IncomingMessage, res: http.ServerResponse): Promise<void> {
 		// Only serve GET requests
 		if (req.method !== 'GET') {
 			return serveError(req, res, 405, `Unsupported method ${req.method}`);
@@ -102,14 +102,16 @@ export class RemoteExtensionHostAgentServer extends Disposable {
 		// Version
 		if (pathname === '/version') {
 			res.writeHead(200, { 'Content-Type': 'text/plain' });
-			return res.end(this._productService.commit || '');
+			res.end(this._productService.commit || '');
+			return;
 		}
 
 		// Delay shutdown
 		if (pathname === '/delay-shutdown') {
 			this._delayShutdown();
 			res.writeHead(200);
-			return res.end('OK');
+			res.end('OK');
+			return;
 		}
 
 		if (!httpRequestHasValidConnectionToken(this._connectionToken, req, parsedUrl)) {
@@ -150,7 +152,8 @@ export class RemoteExtensionHostAgentServer extends Disposable {
 		}
 
 		res.writeHead(404, { 'Content-Type': 'text/plain' });
-		return res.end('Not found');
+		res.end('Not found');
+		return;
 	}
 
 	public handleUpgrade(req: http.IncomingMessage, socket: net.Socket) {
